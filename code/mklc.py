@@ -6,7 +6,7 @@ import numpy
 import glob
 import pyfits
 
-def mklc(t, nspot=200, incl=(scipy.pi)*5./12., amp=0.01, tau=30.5, p=10.0):
+def mklc(t, nspot=200, incl=(scipy.pi)*5./12., amp=1., tau=30.5, p=10.0):
 
     diffrot = 0.
 
