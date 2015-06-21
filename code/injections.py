@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import mklc
 import pyfits
+import fitsio
 
 def inject(pmin, pmax, amin, amax, EPIC):
     """
@@ -16,11 +17,21 @@ def inject(pmin, pmax, amin, amax, EPIC):
     # load test star data
     fname = "hlsp_k2sff_k2_lightcurve_%s-c01_kepler_v1_llc.fits" % EPIC
     dname = "/export/bbq1/angusr/data/vanderburgC1/%s" % fname
-    hdulist = pyfits.open(dname)
-#     print hdulist
-    print np.shape(hdulist)
-    tbdata = hdulist[0]
-    print tbdata
+#     hdulist = pyfits.open(dname)
+
+    data = fitsio.read(dname)
+    aps = fitsio.read(dname, 2)
+    y = data["flux"][:, np.argmin(aps["cdpp6"])]
+    x = data["time"]
+    q = data["quality"]
+    l = np.isfinite(y) * np.isfinite(x) * (q==0)
+    y, x = y[l], x[l]
+    print y, x
+
+# #     print hdulist
+#     print np.shape(hdulist)
+#     tbdata = hdulist[0]
+#     print tbdata
     assert 0
 #     x, y, _ = np.genfromtxt("/export/bbq1/angusr/data/vanderburgc0/%s" % EPIC)
 
