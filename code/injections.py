@@ -3,8 +3,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import mklc
+import pyfits
 
-def inject(pmin, pmin, amin, amax, EPIC):
+def inject(pmin, pmax, amin, amax, EPIC):
     """
     pmin and pmax in days, amin and amax in ppm
     """
@@ -13,6 +14,15 @@ def inject(pmin, pmin, amin, amax, EPIC):
     amps = np.exp(np.random.uniform(np.log(amin), np.log(amax)))
 
     # load test star data
+    fname = "hlsp_k2sff_k2_lightcurve_%s-c01_kepler_v1_llc.fits" % EPIC
+    dname = "/export/bbq1/angusr/data/vanderburgC1/%s" % fname
+    hdulist = pyfits.open(dname)
+#     print hdulist
+    print np.shape(hdulist)
+    tbdata = hdulist[0]
+    print tbdata
+    assert 0
+#     x, y, _ = np.genfromtxt("/export/bbq1/angusr/data/vanderburgc0/%s" % EPIC)
 
     # generate simulated lc
 
